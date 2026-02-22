@@ -1,10 +1,18 @@
 const express = require('express');//express is a node.js framework is used to craete an rest apis
 const morgan=require('morgan');//it is a middleware where the give result speed the status code and time for exicuting the code 
 const products=require('./api/routers/product')
+const cors=require('cors');
 const users=require('./api/routers/user')
+let cookies=require('cookie-parser')
+
 const app = express();//create an express application 
 //we can write all rest api in app.js and import into over main file server .js
 app.use(morgan('dev'))
+app.use(cookies())
+app.use(cors({
+    credentials:true,
+    origin:"http://localhost:5173"
+}));
 app.use(express.json());//it is an middleware it recieve the all json data from the client and give to over backend server 
 app.use('/products',products);//app.use is an middleware where it will use 
 app.use('/user',users);
